@@ -12,14 +12,7 @@ module.exports=class Frb{
     log('checkapp',this.params);
     if (!firebase.apps.length) {
       log('initapp');
-      firebase.initializeApp({
-        apiKey: "AIzaSyAlLYpTROvlBYVxYn1CBx3SJ1NhrZJFWTA",
-        authDomain: "quattrolinee-erica.firebaseapp.com",
-        databaseURL: "https://quattrolinee-erica.firebaseio.com",
-        projectId: "quattrolinee-erica",
-        storageBucket: "quattrolinee-erica.appspot.com",
-        messagingSenderId: "244979820543"
-      });
+      firebase.initializeApp(params.config);
     }
     const firestore=firebase.firestore();
     firestore.settings({timestampsInSnapshots: true});
