@@ -1,6 +1,6 @@
 //CONTROL CUSTOM CONFIRM
 const $ = require("jquery");
-const modal = require("./modal_blackTools_1.0")();
+const modal = require("./modal_blackTools")();
 class Alert{
   constructor(params) {
     window.confirm = (e, yesCallback, noCallback, param)=>{

@@ -1,5 +1,6 @@
 const $ = require("jquery");
 const log = require('bows')('modal');
+const tools=require("black_js/tools")();
 let close_modal=true;
 let open_modal=true;
 class Modal{
@@ -77,6 +78,16 @@ class Modal{
 				}
 			});
 		}
+	};
+  viewInModal(aj_action,aj_data,mdl_title,mdl_class,ajaxbody){
+		if(open_modal){
+			open_modal=false;
+      const view=tools.loadView(aj_action,aj_data,true);
+      view.then((msg)=>{
+        open_modal=true;
+        this.openModal({title:mdl_title,txt:msg},mdl_class,ajaxbody);
+      })
+    }
 	};
 	openWait(txt){
 		if(typeof txt =='undefined') txt="Wait..loading content";

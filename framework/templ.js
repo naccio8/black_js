@@ -31,9 +31,9 @@ short.add('list', (tag,param)=>{
 
   log('TAG CONTENT',tag.content);
   tag.uuid=uuid();
-  const model=require(`../models/${tag.attributes.model}`);
+  const model=local_require(`models/${tag.attributes.model}`);
   const filter=tag.attributes.filter ? tag.attributes.filter:'get';
-  tag.content=(tag.attributes.views)?require(`../views/data_views/${tag.attributes.views}.html`):tag.content;
+  tag.content=(tag.attributes.views)?local_require(`views/data_views/${tag.attributes.views}.html`):tag.content;
   return new Promise((resolve, reject)=>{
     if(tag.attributes.where) param.id=tag.attributes.where.split(',');
     const res=eval(`model${typeof model=='function' ? '()':''}.${filter}(param.id,tag)`);

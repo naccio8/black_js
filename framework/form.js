@@ -9,11 +9,12 @@ module.exports=class Form{
     if(typeof tag!='undefined'){
       this.tag=tag;
       this.params=params;
-      this.frm_str=require(`../form/${tag.attributes.model}_frm.json`);
+      const form_name=(tag.attributes.form_name) ? tag.attributes.form_name:tag.attributes.model;
+      this.frm_str=local_require(`form/${form_name}_frm.json`);
       return new Promise((r,e)=>{
         new Promise((r_data,e_data)=>{
           if(tag.attributes.load && tag.attributes.load!='0'){
-            const model=require(`../models/${tag.attributes.model}`)
+            const model=local_require(`models/${tag.attributes.model}`)
             const filter=tag.attributes.filter ? tag.attributes.filter:'get';
             const res=eval(`model${typeof model=='function' ? '()':''}.${filter}(tag.attributes.load)`);
             res.then((data)=>{
@@ -50,7 +51,7 @@ module.exports=class Form{
       let ret='';
       if(typeof values=='string'){
         log(values);
-        let data=require(`../data/${values}.json`);
+        let data=local_require(`data/${values}.json`);
         log(data,param);
         if(param.vkey){
           log(typeof param.vkey,param.vkey);
@@ -120,6 +121,9 @@ module.exports=class Form{
         case 'hidden':
           if(data && data[key]) data_val=data[key];
           ret+=`<input name="${key}" type="hidden" value="${data_val}">`;
+        break;
+        case 'pwd':
+          ret+=`<div ${this.getAttr(val.property_indiv)}>${label}<input name="${key}" type="password" ${this.getAttr(val.property_input)}><div class="cont_fail fail_${key}"></div></div>`;
         break;
         case 'input':
         case 'email':
